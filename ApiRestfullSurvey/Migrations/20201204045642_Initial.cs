@@ -63,8 +63,7 @@ namespace ApiRestfullSurvey.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdArea = table.Column<int>(type: "int", nullable: false),
-                    AreaId = table.Column<int>(type: "int", nullable: true)
+                    AreaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,7 +73,7 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.AreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,8 +84,7 @@ namespace ApiRestfullSurvey.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdEncuesta = table.Column<int>(type: "int", nullable: false),
-                    EncuestaId = table.Column<int>(type: "int", nullable: true)
+                    EncuestaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,7 +94,7 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.EncuestaId,
                         principalTable: "Encuestas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,8 +110,7 @@ namespace ApiRestfullSurvey.Migrations
                     Edad = table.Column<int>(type: "int", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sexo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdUsuario = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,7 +120,7 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,8 +136,7 @@ namespace ApiRestfullSurvey.Migrations
                     Edad = table.Column<int>(type: "int", nullable: false),
                     Sexo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdUsuario = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,7 +146,7 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,11 +155,10 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdUsuario = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
                     Hora_Inicio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Hora_Final = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,7 +168,7 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,34 +180,24 @@ namespace ApiRestfullSurvey.Migrations
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Fechafinal = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdEncuesta = table.Column<int>(type: "int", nullable: false),
-                    IdArea = table.Column<int>(type: "int", nullable: false),
-                    IdCategoria = table.Column<int>(type: "int", nullable: false),
-                    AreaId = table.Column<int>(type: "int", nullable: true),
-                    CategoriaId = table.Column<int>(type: "int", nullable: true),
-                    EncuestaId = table.Column<int>(type: "int", nullable: true)
+                    EncuestaId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DetalleEncuestas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DetalleEncuestas_Areas_AreaId",
-                        column: x => x.AreaId,
-                        principalTable: "Areas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_DetalleEncuestas_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
                         principalTable: "Categorias",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DetalleEncuestas_Encuestas_EncuestaId",
                         column: x => x.EncuestaId,
                         principalTable: "Encuestas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,8 +208,7 @@ namespace ApiRestfullSurvey.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdPregunta = table.Column<int>(type: "int", nullable: false),
-                    PreguntaId = table.Column<int>(type: "int", nullable: true)
+                    PreguntaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -234,7 +218,7 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.PreguntaId,
                         principalTable: "Preguntas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,11 +227,9 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdEncuesta = table.Column<int>(type: "int", nullable: false),
-                    IdResultado = table.Column<int>(type: "int", nullable: false),
-                    Valor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EncuestaId = table.Column<int>(type: "int", nullable: true),
-                    ResultadoId = table.Column<int>(type: "int", nullable: true)
+                    EncuestaId = table.Column<int>(type: "int", nullable: false),
+                    ResultadoId = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,13 +239,13 @@ namespace ApiRestfullSurvey.Migrations
                         column: x => x.EncuestaId,
                         principalTable: "Encuestas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DetalleResultados_Resultados_ResultadoId",
                         column: x => x.ResultadoId,
                         principalTable: "Resultados",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -275,11 +257,6 @@ namespace ApiRestfullSurvey.Migrations
                 name: "IX_Coordinadores_UsuarioId",
                 table: "Coordinadores",
                 column: "UsuarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetalleEncuestas_AreaId",
-                table: "DetalleEncuestas",
-                column: "AreaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleEncuestas_CategoriaId",

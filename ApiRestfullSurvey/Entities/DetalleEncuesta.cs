@@ -13,12 +13,9 @@ namespace ApiRestfullSurvey.Entities
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime Fechafinal { get; set; }
         public string Estado { get; set; }
-        public int IdEncuesta { get; set; }
-        public int IdArea { get; set; }
-        public int IdCategoria { get; set; }
-
-        public virtual Area Area { get; set; }
-        public virtual Categoria Categoria { get; set; }
-        public virtual Encuesta Encuesta { get; set; }
+        public int EncuestaId { get; set; }
+        public int CategoriaId { get; set; }
+        public Categoria Categoria { get; set; }
+        public Encuesta Encuesta { get; set; }
     }
 }

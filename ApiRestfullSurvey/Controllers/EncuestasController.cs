@@ -1,5 +1,7 @@
 ﻿using ApiRestfullSurvey.Contexts;
 using ApiRestfullSurvey.Entities;
+using ApiRestfullSurvey.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,9 +16,11 @@ namespace ApiRestfullSurvey.Controllers
     public class EncuestasController : ControllerBase
     {
         private readonly ApplicationDbContext context;
-        public EncuestasController(ApplicationDbContext context)
+        private readonly IMapper mapper;
+        public EncuestasController(ApplicationDbContext context,IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet("/listado")]
@@ -35,7 +39,7 @@ namespace ApiRestfullSurvey.Controllers
         }
 
         [HttpGet("{id}/{param2=Param}")]
-        public async Task<ActionResult<Encuesta>> GetEncuesta(int id, string param2)
+        public async Task<ActionResult<EncuestaDTO>> GetEncuesta(int id, string param2)
         {
             var encuesta = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -43,8 +47,8 @@ namespace ApiRestfullSurvey.Controllers
             {
                 return NotFound();
             }
-
-            return encuesta;
+            var EncuestaDTO = mapper.Map<EncuestaDTO>(encuesta);
+            return EncuestaDTO;
         }
 
         [HttpPost]

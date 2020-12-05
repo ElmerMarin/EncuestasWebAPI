@@ -4,16 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiRestfullSurvey.Entities
+namespace ApiRestfullSurvey.Models
 {
-    public class Respuesta
+    public class PreguntaDTO
     {
         [Key]
         public int Id { get; set; }
         public string Descripcion { get; set; }
-        public string Estado { get; set; }
-        public int PreguntaId { get; set; }
-
-        public Pregunta Pregunta { get; set; }
+        public int EncuestaId { get; set; }
+        public List<RespuestaDTO> Respuesta { get; set; }
     }
 }

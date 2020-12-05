@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiRestfullSurvey.Entities
+namespace ApiRestfullSurvey.Models
 {
-    public class DetalleResultado
+    public class DetalleResultadoDTO
     {
         [Key]
         public int Id { get; set; }
@@ -14,7 +14,5 @@ namespace ApiRestfullSurvey.Entities
         public int ResultadoId { get; set; }
         public string Valor { get; set; }
 
-        public Encuesta Encuesta { get; set; }
-        public Resultado Resultado { get; set; }
     }
 }

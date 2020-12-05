@@ -14,8 +14,8 @@ namespace ApiRestfullSurvey.Entities
         public string Descripcion { get; set; }
         public string Estado { get; set; }
 
-        public virtual ICollection<DetalleEncuesta> DetalleEncuesta { get; set; }
-        public virtual ICollection<DetalleResultado> DetalleResultado { get; set; }
-        public virtual ICollection<Pregunta> Preguntas { get; set; }
+        public List<DetalleEncuesta> DetalleEncuesta { get; set; }
+        public List<DetalleResultado> DetalleResultado { get; set; }
+        public List<Pregunta> Preguntas { get; set; }
     }
 }

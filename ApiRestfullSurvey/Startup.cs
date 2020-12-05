@@ -1,4 +1,7 @@
 using ApiRestfullSurvey.Contexts;
+using ApiRestfullSurvey.Entities;
+using ApiRestfullSurvey.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +33,13 @@ namespace ApiRestfullSurvey
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ConexionBD"))
             );
-            services.AddControllers();
+            services.AddAutoMapper(Configuration =>
+            {
+                Configuration.CreateMap<Encuesta,EncuestaDTO>();
+            },typeof(Startup));
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

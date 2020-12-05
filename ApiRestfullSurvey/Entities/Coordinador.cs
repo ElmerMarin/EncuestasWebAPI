@@ -19,8 +19,8 @@ namespace ApiRestfullSurvey.Entities
         public int Edad { get; set; }
         public string Telefono { get; set; }
         public string Sexo { get; set; }
-        public int IdUsuario { get; set; }
+        public int UsuarioId { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

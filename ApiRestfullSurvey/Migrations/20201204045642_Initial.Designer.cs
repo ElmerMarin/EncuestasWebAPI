@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiRestfullSurvey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201201014449_Initial")]
+    [Migration("20201204045642_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace ApiRestfullSurvey.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("AreaId")
+                    b.Property<int>("AreaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
@@ -57,9 +57,6 @@ namespace ApiRestfullSurvey.Migrations
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("IdArea")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -91,9 +88,6 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<int>("IdCoordinador")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombres")
                         .HasColumnType("nvarchar(max)");
 
@@ -103,7 +97,7 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Dni");
@@ -120,13 +114,10 @@ namespace ApiRestfullSurvey.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("AreaId")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EncuestaId")
+                    b.Property<int>("EncuestaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
@@ -138,18 +129,7 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<DateTime>("Fechafinal")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdArea")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdCategoria")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdEncuesta")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AreaId");
 
                     b.HasIndex("CategoriaId");
 
@@ -165,16 +145,10 @@ namespace ApiRestfullSurvey.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("EncuestaId")
+                    b.Property<int>("EncuestaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEncuesta")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdResultado")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResultadoId")
+                    b.Property<int>("ResultadoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Valor")
@@ -230,9 +204,6 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<int>("IdEncuestado")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombres")
                         .HasColumnType("nvarchar(max)");
 
@@ -242,7 +213,7 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Dni");
@@ -262,14 +233,11 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EncuestaId")
+                    b.Property<int>("EncuestaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdEncuesta")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -291,10 +259,7 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdPregunta")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PreguntaId")
+                    b.Property<int>("PreguntaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -320,10 +285,7 @@ namespace ApiRestfullSurvey.Migrations
                     b.Property<string>("Hora_Inicio")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -364,7 +326,9 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Area", "Area")
                         .WithMany("Categoria")
-                        .HasForeignKey("AreaId");
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Area");
                 });
@@ -373,26 +337,26 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Usuario", "Usuario")
                         .WithMany("Coordinador")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("ApiRestfullSurvey.Entities.DetalleEncuesta", b =>
                 {
-                    b.HasOne("ApiRestfullSurvey.Entities.Area", "Area")
-                        .WithMany("DetalleEncuesta")
-                        .HasForeignKey("AreaId");
-
                     b.HasOne("ApiRestfullSurvey.Entities.Categoria", "Categoria")
-                        .WithMany("DetalleEncuesta")
-                        .HasForeignKey("CategoriaId");
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ApiRestfullSurvey.Entities.Encuesta", "Encuesta")
                         .WithMany("DetalleEncuesta")
-                        .HasForeignKey("EncuestaId");
-
-                    b.Navigation("Area");
+                        .HasForeignKey("EncuestaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
 
@@ -403,11 +367,15 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Encuesta", "Encuesta")
                         .WithMany("DetalleResultado")
-                        .HasForeignKey("EncuestaId");
+                        .HasForeignKey("EncuestaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ApiRestfullSurvey.Entities.Resultado", "Resultado")
                         .WithMany("DetalleResultado")
-                        .HasForeignKey("ResultadoId");
+                        .HasForeignKey("ResultadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Encuesta");
 
@@ -418,7 +386,9 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Usuario", "Usuario")
                         .WithMany("Encuestado")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -427,7 +397,9 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Encuesta", "Encuesta")
                         .WithMany("Preguntas")
-                        .HasForeignKey("EncuestaId");
+                        .HasForeignKey("EncuestaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Encuesta");
                 });
@@ -436,7 +408,9 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Pregunta", "Pregunta")
                         .WithMany("Respuesta")
-                        .HasForeignKey("PreguntaId");
+                        .HasForeignKey("PreguntaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Pregunta");
                 });
@@ -445,7 +419,9 @@ namespace ApiRestfullSurvey.Migrations
                 {
                     b.HasOne("ApiRestfullSurvey.Entities.Usuario", "Usuario")
                         .WithMany("Resultado")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -453,13 +429,6 @@ namespace ApiRestfullSurvey.Migrations
             modelBuilder.Entity("ApiRestfullSurvey.Entities.Area", b =>
                 {
                     b.Navigation("Categoria");
-
-                    b.Navigation("DetalleEncuesta");
-                });
-
-            modelBuilder.Entity("ApiRestfullSurvey.Entities.Categoria", b =>
-                {
-                    b.Navigation("DetalleEncuesta");
                 });
 
             modelBuilder.Entity("ApiRestfullSurvey.Entities.Encuesta", b =>
