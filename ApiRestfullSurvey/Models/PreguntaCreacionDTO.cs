@@ -10,8 +10,6 @@ namespace ApiRestfullSurvey.Models
     {
 
         public string Descripcion { get; set; }
-        public string Estado { get; set; }
-
-
+        
     }
 }
