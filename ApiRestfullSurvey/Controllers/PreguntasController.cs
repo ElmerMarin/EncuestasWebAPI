@@ -14,11 +14,11 @@ namespace ApiRestfullSurvey.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EncuestasController : ControllerBase
+    public class PreguntasController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
-        public EncuestasController(ApplicationDbContext context,IMapper mapper)
+        public PreguntasController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
@@ -27,41 +27,35 @@ namespace ApiRestfullSurvey.Controllers
         [HttpGet("/listado")]
         [HttpGet("listado")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EncuestaDTO>>>Get()
+        public async Task<ActionResult<IEnumerable<PreguntaDTO>>> Get()
         {
 
-            var encuestas = await context.Encuestas.ToListAsync();
-            var encuestasDTO = mapper.Map<List<EncuestaDTO>>(encuestas);
-            return encuestasDTO;
+            var preguntas = await context.Preguntas.ToListAsync();
+            var preguntaDTO = mapper.Map<List<PreguntaDTO>>(preguntas);
+            return preguntaDTO;
         }
 
-        [HttpGet("Primer")]
-        public ActionResult<Encuesta> GetPrimeraEncuesta()
+        [HttpGet("{id}", Name = "ObtenerAutor")]
+        public async Task<ActionResult<PreguntaDTO>> GetPregunta(int id, string param2)
         {
-            return context.Encuestas.FirstOrDefault();
-        }
+            var pregunta = await context.Preguntas.FirstOrDefaultAsync(x => x.Id == id);
 
-        [HttpGet("{id}",Name = "ObtenerAutor")]
-        public async Task<ActionResult<EncuestaDTO>> GetEncuesta(int id, string param2)
-        {
-            var encuesta = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (encuesta == null)
+            if (pregunta == null)
             {
                 return NotFound();
             }
-            var encuestaDTO = mapper.Map<EncuestaDTO>(encuesta);
-            return encuestaDTO;
+            var preguntaDTO = mapper.Map<PreguntaDTO>(pregunta);
+            return preguntaDTO;
         }
 
         [HttpPost]
-        public async Task<ActionResult>Post([FromBody] EncuestaCreacionDTO encuestaCreacion)
+        public async Task<ActionResult> Post([FromBody] EncuestaCreacionDTO encuestaCreacion)
         {
             var encuesta = mapper.Map<Encuesta>(encuestaCreacion);
             context.Encuestas.Add(encuesta);
             await context.SaveChangesAsync();
             var encuestaDTO = mapper.Map<EncuestaDTO>(encuesta);
-            return new CreatedAtRouteResult("ObtenerAutor", new { id =encuesta.Id }, encuestaDTO);
+            return new CreatedAtRouteResult("ObtenerAutor", new { id = encuesta.Id }, encuestaDTO);
         }
 
         [HttpPut("{id}")]
@@ -76,45 +70,46 @@ namespace ApiRestfullSurvey.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> Patch(int id, [FromBody] JsonPatchDocument<Encuesta> pathDocument)
+        public async Task<ActionResult> Patch(int id, [FromBody] JsonPatchDocument<Pregunta> pathDocument)
         {
-            if (pathDocument==null) 
+            if (pathDocument == null)
             {
                 return BadRequest();
             }
 
-            var EncuestaDB = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
+            var preguntaDB = await context.Preguntas.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (EncuestaDB == null) 
+            if (preguntaDB == null)
             {
                 return NotFound();
             }
 
-            pathDocument.ApplyTo(EncuestaDB,ModelState);
+            pathDocument.ApplyTo(preguntaDB, ModelState);
 
-            var isValid = TryValidateModel(EncuestaDB);
+            var isValid = TryValidateModel(preguntaDB);
 
-            if (!isValid) {
+            if (!isValid)
+            {
                 return BadRequest(ModelState);
-            
+
             }
 
             await context.SaveChangesAsync();
 
 
-             return NoContent();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Encuesta>> Delete(int id)
+        public async Task<ActionResult<Pregunta>> Delete(int id)
         {
-            var autorId = await context.Encuestas.Select(x=>x.Id).FirstOrDefaultAsync(x => x == id);
+            var autorId = await context.Preguntas.Select(x => x.Id).FirstOrDefaultAsync(x => x == id);
 
             if (autorId == default(int))
             {
                 return NotFound();
             }
-            context.Encuestas.Remove(new Encuesta {Id=autorId});
+            context.Preguntas.Remove(new Pregunta { Id = autorId });
             await context.SaveChangesAsync();
             return NoContent();
         }
