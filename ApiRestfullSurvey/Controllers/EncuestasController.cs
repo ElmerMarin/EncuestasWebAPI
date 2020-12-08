@@ -41,7 +41,7 @@ namespace ApiRestfullSurvey.Controllers
             return context.Encuestas.FirstOrDefault();
         }
 
-        [HttpGet("{id}",Name = "ObtenerAutor")]
+        [HttpGet("{id}",Name = "ObtenerEncuesta")]
         public async Task<ActionResult<EncuestaDTO>> GetEncuesta(int id, string param2)
         {
             var encuesta = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
@@ -61,7 +61,7 @@ namespace ApiRestfullSurvey.Controllers
             context.Encuestas.Add(encuesta);
             await context.SaveChangesAsync();
             var encuestaDTO = mapper.Map<EncuestaDTO>(encuesta);
-            return new CreatedAtRouteResult("ObtenerAutor", new { id =encuesta.Id }, encuestaDTO);
+            return new CreatedAtRouteResult("ObtenerEncuesta", new { id =encuesta.Id }, encuestaDTO);
         }
 
         [HttpPut("{id}")]
@@ -76,23 +76,27 @@ namespace ApiRestfullSurvey.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> Patch(int id, [FromBody] JsonPatchDocument<Encuesta> pathDocument)
+        public async Task<ActionResult> Patch(int id, [FromBody] JsonPatchDocument<EncuestaCreacionDTO> pathDocument)
         {
             if (pathDocument==null) 
             {
                 return BadRequest();
             }
 
-            var EncuestaDB = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
+            var encuestaDB = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (EncuestaDB == null) 
+            if (encuestaDB == null) 
             {
                 return NotFound();
             }
 
-            pathDocument.ApplyTo(EncuestaDB,ModelState);
+            var encuestaDTO = mapper.Map<EncuestaCreacionDTO>(encuestaDB);
 
-            var isValid = TryValidateModel(EncuestaDB);
+            pathDocument.ApplyTo(encuestaDTO, ModelState);
+
+            mapper.Map(encuestaDTO, encuestaDB);
+
+            var isValid = TryValidateModel(encuestaDB);
 
             if (!isValid) {
                 return BadRequest(ModelState);
@@ -101,8 +105,7 @@ namespace ApiRestfullSurvey.Controllers
 
             await context.SaveChangesAsync();
 
-
-             return NoContent();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

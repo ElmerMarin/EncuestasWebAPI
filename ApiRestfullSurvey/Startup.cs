@@ -37,6 +37,8 @@ namespace ApiRestfullSurvey
             {
                 Configuration.CreateMap<Encuesta,EncuestaDTO>();
                 Configuration.CreateMap<EncuestaCreacionDTO, Encuesta>().ReverseMap();
+                Configuration.CreateMap<Pregunta,PreguntaDTO>();
+                Configuration.CreateMap<PreguntaCreacionDTO, Pregunta>().ReverseMap();
             },typeof(Startup));
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

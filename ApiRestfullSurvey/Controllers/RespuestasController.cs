@@ -2,6 +2,7 @@
 using ApiRestfullSurvey.Entities;
 using ApiRestfullSurvey.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,12 @@ using System.Threading.Tasks;
 
 namespace ApiRestfullSurvey.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PreguntasController : ControllerBase
+    public class RespuestasController : Controller
     {
+        // GET: RespuestasController
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
-        public PreguntasController(ApplicationDbContext context, IMapper mapper)
+        public RespuestasController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
@@ -27,25 +27,25 @@ namespace ApiRestfullSurvey.Controllers
         [HttpGet("/listado")]
         [HttpGet("listado")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PreguntaDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<RespuestaDTO>>> Get()
         {
 
-            var preguntas = await context.Preguntas.ToListAsync();
-            var preguntaDTO = mapper.Map<List<PreguntaDTO>>(preguntas);
+            var preguntas = await context.Respuestas.ToListAsync();
+            var preguntaDTO = mapper.Map<List<RespuestaDTO>>(preguntas);
             return preguntaDTO;
         }
 
-        [HttpGet("{id}", Name = "ObtenerPregunta")]
-        public async Task<ActionResult<PreguntaDTO>> GetPregunta(int id, string param2)
+        [HttpGet("{id}", Name = "ObtenerRespuesta")]
+        public async Task<ActionResult<RespuestaDTO>> GetPregunta(int id, string param2)
         {
-            var pregunta = await context.Preguntas.FirstOrDefaultAsync(x => x.Id == id);
+            var respuesta = await context.Respuestas.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (pregunta == null)
+            if (respuesta == null)
             {
                 return NotFound();
             }
-            var preguntaDTO = mapper.Map<PreguntaDTO>(pregunta);
-            return preguntaDTO;
+            var respuestaDTO = mapper.Map<RespuestaDTO>(respuesta);
+            return respuestaDTO;
         }
 
         [HttpPost]
@@ -107,13 +107,13 @@ namespace ApiRestfullSurvey.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Pregunta>> Delete(int id)
         {
-            var autorId = await context.Preguntas.Select(x => x.Id).FirstOrDefaultAsync(x => x == id);
+            var autorId = await context.Respuestas.Select(x => x.Id).FirstOrDefaultAsync(x => x == id);
 
             if (autorId == default(int))
             {
                 return NotFound();
             }
-            context.Preguntas.Remove(new Pregunta { Id = autorId });
+            context.Respuestas.Remove(new Respuesta { Id = autorId });
             await context.SaveChangesAsync();
             return NoContent();
         }
