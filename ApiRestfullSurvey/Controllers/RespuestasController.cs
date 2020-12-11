@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 
 namespace ApiRestfullSurvey.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class RespuestasController : Controller
     {
         // GET: RespuestasController
