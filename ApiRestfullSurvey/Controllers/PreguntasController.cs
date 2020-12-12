@@ -24,10 +24,8 @@ namespace ApiRestfullSurvey.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("/listado")]
-        [HttpGet("listado")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PreguntaDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<PreguntaDTO>>> GetPreguntaAll()
         {
 
             var preguntas = await context.Preguntas.ToListAsync();
@@ -107,13 +105,13 @@ namespace ApiRestfullSurvey.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Pregunta>> Delete(int id)
         {
-            var autorId = await context.Preguntas.Select(x => x.Id).FirstOrDefaultAsync(x => x == id);
+            var preguntaId = await context.Preguntas.Select(x => x.Id).FirstOrDefaultAsync(x => x == id);
 
-            if (autorId == default(int))
+            if (preguntaId == default(int))
             {
                 return NotFound();
             }
-            context.Preguntas.Remove(new Pregunta { Id = autorId });
+            context.Preguntas.Remove(new Pregunta { Id = preguntaId });
             await context.SaveChangesAsync();
             return NoContent();
         }

@@ -26,10 +26,10 @@ namespace ApiRestfullSurvey.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("/listado")]
-        [HttpGet("listado")]
+        [HttpGet("/listadoCategoria")]
+        [HttpGet("listadoCategoria")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoriaDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetCategoriaAll()
         {
 
             var categorias = await context.Categorias.ToListAsync();
@@ -38,7 +38,7 @@ namespace ApiRestfullSurvey.Controllers
         }
 
         [HttpGet("Primer")]
-        public ActionResult<Categoria> GetPrimeraEncuesta()
+        public ActionResult<Categoria> GetPrimeraCategoria()
         {
             return context.Categorias.FirstOrDefault();
         }
@@ -85,7 +85,7 @@ namespace ApiRestfullSurvey.Controllers
                 return BadRequest();
             }
 
-            var categoriaDB = await context.Encuestas.FirstOrDefaultAsync(x => x.Id == id);
+            var categoriaDB = await context.Categorias.FirstOrDefaultAsync(x => x.Id == id);
 
             if (categoriaDB == null)
             {

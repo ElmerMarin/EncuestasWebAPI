@@ -27,10 +27,10 @@ namespace ApiRestfullSurvey.Controllers
         }
 
 
-        [HttpGet("/listado")]
-        [HttpGet("listado")]
+        [HttpGet("/listadoArea")]
+        [HttpGet("listadoArea")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AreaDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<AreaDTO>>> GetAreaAll()
         {
 
             var areas = await context.Areas.ToListAsync();

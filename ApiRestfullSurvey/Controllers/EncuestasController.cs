@@ -24,8 +24,6 @@ namespace ApiRestfullSurvey.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("/listado")]
-        [HttpGet("listado")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EncuestaDTO>>>Get()
         {
@@ -111,13 +109,13 @@ namespace ApiRestfullSurvey.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Encuesta>> Delete(int id)
         {
-            var autorId = await context.Encuestas.Select(x=>x.Id).FirstOrDefaultAsync(x => x == id);
+            var encuestaId = await context.Encuestas.Select(x=>x.Id).FirstOrDefaultAsync(x => x == id);
 
-            if (autorId == default(int))
+            if (encuestaId == default(int))
             {
                 return NotFound();
             }
-            context.Encuestas.Remove(new Encuesta {Id=autorId});
+            context.Encuestas.Remove(new Encuesta {Id=encuestaId});
             await context.SaveChangesAsync();
             return NoContent();
         }
