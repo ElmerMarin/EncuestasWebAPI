@@ -12,6 +12,6 @@ namespace ApiRestfullSurvey.Models
         [Key]
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public List<Categoria> Categoria { get; set; }
+        public List<CategoriaDTO> Categoria { get; set; }
     }
 }

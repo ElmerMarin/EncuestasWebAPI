@@ -13,7 +13,7 @@ namespace ApiRestfullSurvey.Models
         public int Id { get; set; }
         public int UsuarioId { get; set; }
         public System.DateTime Fecha { get; set; }
-        public List<DetalleResultado> DetalleResultado { get; set; }
+        public List<DetalleResultadoDTO> DetalleResultado { get; set; }
 
     }
 }

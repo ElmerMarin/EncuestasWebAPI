@@ -12,8 +12,8 @@ namespace ApiRestfullSurvey.Models
         public string Correo { get; set; }
         public string NombreUsuario { get; set; }
 
-        public List<Coordinador> Coordinador { get; set; }
-        public List<Encuestado> Encuestado { get; set; }
-        public List<Resultado> Resultado { get; set; }
+        public List<CoordinadorCreacionDTO> Coordinador { get; set; }
+        public List<EncuestadoCreacionDTO> Encuestado { get; set; }
+        public List<ResultadoCreacionDTO> Resultado { get; set; }
     }
 }

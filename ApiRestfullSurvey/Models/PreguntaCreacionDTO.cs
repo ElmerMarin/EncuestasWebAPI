@@ -10,6 +10,8 @@ namespace ApiRestfullSurvey.Models
     {
 
         public string Descripcion { get; set; }
-        
+        public int EncuestaId { get; set; }
+        public List<RespuestaCreacionDTO> Respuesta { get; set; }
+
     }
 }
