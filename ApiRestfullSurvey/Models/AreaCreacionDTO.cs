@@ -10,6 +10,6 @@ namespace ApiRestfullSurvey.Models
     {
 
         public string Nombre { get; set; }
-        public List<CategoriaCreacionDTO> Categoria { get; set; }
+        
     }
 }

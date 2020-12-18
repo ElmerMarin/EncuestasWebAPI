@@ -11,6 +11,6 @@ namespace ApiRestfullSurvey.Models
 
         public int UsuarioId { get; set; }
         public System.DateTime Fecha { get; set; }
-        public List<DetalleResultadoCreacionDTO> DetalleResultado { get; set; }
+       
     }
 }
