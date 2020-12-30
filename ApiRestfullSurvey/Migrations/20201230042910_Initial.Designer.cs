@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiRestfullSurvey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201204045642_Initial")]
+    [Migration("20201230042910_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
